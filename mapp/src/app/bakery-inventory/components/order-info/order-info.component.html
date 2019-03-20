@@ -1,0 +1,76 @@
+<div [formGroup]="parent">
+  <div formGroupName="info" class="info-agile-persnal">
+      <h3>Personal Details</h3>
+      <div class="form-group">
+        <div class="form-left-w3ls">
+            <input 
+                type="text" 
+                class="form-control"
+                placeholder="Name"
+                formControlName="name">
+            <span 
+              *ngIf="required('name')"
+              class="error">
+                Name is required
+            </span>
+        </div>
+        <div class="form-right-w3ls">
+            <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Last Name"
+                formControlName="surname">
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="form-group">
+        <div class="form-left-w3ls">
+            <input 
+                type="email" 
+                class="form-control" 
+                placeholder="Email"
+                formControlName="email">
+        </div>
+        <div class="form-right-w3ls">
+            <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Phone"
+                formControlName="phone">
+              <span 
+                *ngIf="required('phone')"
+                class="error">
+                  Phone is required
+              </span>
+              <span 
+                *ngIf="invalidPhone"
+                class="error">
+                  Invalid phone format
+              </span>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="form-group">
+        <div class="form-mid-w3ls">
+            <input 
+                type="text" 
+                placeholder="City"
+                formControlName="city">
+        </div>
+        <div class="form-mid-w3ls">
+            <input 
+                type="text" 
+                placeholder="Address" 
+                formControlName="address">
+        </div>
+        
+        <div class="form-mid-w3ls">
+            <input 
+                type="text" 
+                placeholder="State"
+                formControlName="state">
+        </div>
+        <div class="clear"></div>
+      </div>
+  </div>
+</div>

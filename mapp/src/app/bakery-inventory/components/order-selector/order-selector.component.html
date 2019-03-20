@@ -1,0 +1,60 @@
+<div [formGroup]="parent">
+  <div formGroupName="selector" class="info-agile-persnal">
+      <h3>Booking Details</h3>
+      <div class="sub-agile-info">
+        <h6>Select your Favourite Cakes</h6>
+      </div>
+      <div class="form-group-three">
+        <div class="form-left-three-w3l">
+            <div class="iner-left">
+              <label>Quantity</label>
+            </div>
+            <div class="form-inn">
+              <app-order-counter
+                [step]="1"
+                [min]="1"
+                [max]="100"
+                formControlName="quantity"></app-order-counter>
+            </div>
+        </div>
+        <div class="form-mid-three-w3l">
+            <div class="iner-left">
+              <label>Item</label>
+            </div>
+            <div class="form-inn">
+              <select formControlName="product_id" class="opt-select country-buttom">
+                  <option value="">
+                    Select Cake</option>
+                  <option
+                    *ngFor="let product of cakes"
+                    [value]="product.id">
+                    {{product.name}}
+                  </option>
+              </select>
+            </div>
+        </div>
+        <div class="form-right-three-w3l">
+            <div class="iner-left">
+              <label>Quality</label>
+            </div>
+            <div class="form-inn">
+              <select formControlName="quantitySize" class="opt-select country-buttom">
+                  <option value="">
+                    Select Size
+                  </option> 
+                  <option 
+                  *ngFor = "let size of sizes"
+                  [value]="size">{{size}}</option>
+              </select>
+            </div>
+        </div>
+        <div class="form-right-three-w3l set-reset">
+          <button 
+            type="button" 
+            (click)="onAdd()"
+            [disabled]="!selectorEmpty">Add</button>
+        </div>
+        <div class="clear"></div>
+      </div>
+  </div>
+</div>

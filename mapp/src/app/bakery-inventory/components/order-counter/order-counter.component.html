@@ -1,0 +1,26 @@
+<div
+  class="or-counter"
+  [class.focused]="focus">
+    <div 
+    tabindex="0"
+    class="in_div"
+    (keydown)="onKeyDown($event)"
+    (blur)="onBlur($event)"
+    (focus)="onFocus($event)">
+      <p>{{ value }}</p>
+      <div>
+          <button
+            type="button"
+            (click)="increment()"
+            [disabled]="value===max">
+              <i class="fas fa-plus"></i>
+          </button>
+          <button
+            type="button"
+            (click)="decrement()"
+            [disabled]="value===min">
+              <i class="fas fa-minus"></i>
+          </button>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div [formGroup]="parent">
+  <div formArrayName="stock" class="info-agile-persnal">
+    <div *ngIf="stocks.length > 0">
+      <h3>Stock Details</h3>
+      <div class="sub-agile-info">
+        <h6>Select your Favourite Cakes</h6>
+    </div>
+    </div>
+      <div
+        *ngFor = "let item of stocks; let i=index;">
+        <div [formGroupName]="i" class="stock-product__content">
+          <div class="form-group-three">
+            <div class="form-left-three-w3l">
+                <div class="iner-left">
+                  <label>Quantity</label>
+                </div>
+                <div class="form-inn">
+                  <input 
+                    formControlName="quantity" 
+                    class="opt-input country-buttom"
+                    type="number"
+                    min="1"
+                    max="100"
+                    step="1">
+                </div>
+            </div>
+            <div class="form-mid-three-w3l product-name">
+                {{cakes[item.value.product_id-1].name}}
+            </div>
+            <div class="form-right-three-w3l">
+                <div class="iner-left">
+                  <label>Quality</label>
+                </div>
+                <div class="form-inn">
+                  <select formControlName="quantitySize" class="opt-select country-buttom">
+                      <option value="">
+                        Select Size
+                      </option>
+                      <option 
+                      *ngFor = "let size of sizes"
+                      [value]="size">{{size}}</option>
+                  </select>
+                </div>
+            </div>
+            <div class="form-right-three-w3l product-price">
+              Price {{ getPrice(item.value.product_id, item.value.quantity, item.value.quantitySize) | currency: 'USD'}}
+            </div>
+            <div class="form-right-three-w3l set-reset">
+              <button type="button" (click)="onRemove(item, i)">Remove</button>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+      <div class="total-price" *ngIf="getTotalPrice()>0">
+      <h3>Total price</h3>
+        {{ getTotalPrice() | currency: 'USD' }}
+      </div>
+  </div>
+</div>
