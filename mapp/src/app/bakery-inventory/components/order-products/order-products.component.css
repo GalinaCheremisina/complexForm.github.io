@@ -1,12 +1,13 @@
-.set-reset button[type="button"]{
-    font-size: 1em;
-    margin: 0;
+.set-reset button[type="button"] {
+  font-size: 1em;
+  margin: 0;
 }
-.product-name, .product-price{
-    color:#fff;
-    margin-top: 10px;
+.product-name,
+.product-price {
+  color: #fff;
+  margin-top: 10px;
 }
-.total-price{
-    color:#fff;
-    font-size: 1.2em;
+.total-price {
+  color: #fff;
+  font-size: 1.2em;
 }

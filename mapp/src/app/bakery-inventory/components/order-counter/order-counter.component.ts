@@ -4,78 +4,75 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 const COUNTER_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => OrderCounterComponent),
-  multi: true
-}
+  multi: true,
+};
 
 @Component({
   selector: 'app-order-counter',
   providers: [COUNTER_CONTROL_ACCESSOR],
   templateUrl: './order-counter.component.html',
-  styleUrls: ['./order-counter.component.css']
+  styleUrls: ['./order-counter.component.css'],
 })
 export class OrderCounterComponent implements ControlValueAccessor {
+  @Input() public step = 1;
+  @Input() public min = 1;
+  @Input() public max = 100;
 
-  @Input() step: number = 1;
-  @Input() min: number = 1;
-  @Input() max: number = 100;
-
-  value: number = 1;
-  focus: boolean;
-
+  public value = 1;
+  public focus: boolean;
   private onTouch: Function;
   private onModelCahge: Function;
 
-  writeValue(value: number){
+  public writeValue(value: number) {
     this.value = value || 1;
   }
 
-  registerOnTouched(fn){
+  public registerOnTouched(fn): void {
     this.onTouch = fn;
   }
 
-  registerOnChange(fn){
+  public registerOnChange(fn): void {
     this.onModelCahge = fn;
   }
 
-  increment(){
-    if(this.value < this.max){
+  public increment(): void {
+    if (this.value < this.max) {
       this.value += this.step;
       this.onModelCahge(this.value);
     }
     this.onTouch();
   }
 
-  decrement(){
-    if(this.value > this.min){
+  public decrement(): void {
+    if (this.value > this.min) {
       this.value -= this.step;
       this.onModelCahge(this.value);
     }
     this.onTouch();
   }
 
-  onKeyDown(event: KeyboardEvent){
+  public onKeyDown(event: KeyboardEvent): void {
     const handlers = {
       ArrowDown: () => this.decrement(),
       ArrowUp: () => this.increment(),
     };
 
-    if(handlers[event.code]){
+    if (handlers[event.code]) {
       handlers[event.code]();
       event.preventDefault();
       event.stopPropagation();
     }
     this.onTouch();
-
   }
-  
-  onBlur(event: FocusEvent){
+
+  public onBlur(event: FocusEvent): void {
     this.focus = false;
     event.preventDefault();
     event.stopPropagation();
     this.onTouch();
   }
-  
-  onFocus(event: FocusEvent){
+
+  public onFocus(event: FocusEvent): void {
     this.focus = true;
     event.preventDefault();
     event.stopPropagation();
