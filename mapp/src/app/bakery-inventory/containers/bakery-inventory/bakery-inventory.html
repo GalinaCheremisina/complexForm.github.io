@@ -1,15 +1,17 @@
 <div class="art-bothside">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <app-order-info [parent]="form"> </app-order-info>
+    <app-order-info [parent]="form"></app-order-info>
 
-    <app-order-selector [parent]="form" [cakes]="cakes" (added)="added($event)">
+    <app-order-selector
+      [parent]="form"
+      [cakes]="cakes$ | async"
+      (added)="added($event)">
     </app-order-selector>
 
     <app-order-products
       [parent]="form"
-      [cakes]="cakes"
-      (removed)="removed($event)"
-    >
+      [cakes]="cakes$ | async"
+      (removed)="removed($event)">
     </app-order-products>
 
     <div class="set-reset">

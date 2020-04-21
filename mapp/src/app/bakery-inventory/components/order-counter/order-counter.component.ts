@@ -1,5 +1,6 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 
 const COUNTER_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -12,20 +13,20 @@ const COUNTER_CONTROL_ACCESSOR = {
   providers: [COUNTER_CONTROL_ACCESSOR],
   templateUrl: './order-counter.component.html',
   styleUrls: ['./order-counter.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderCounterComponent implements ControlValueAccessor {
-  @Input() public step = 1;
-  @Input() public min = 1;
-  @Input() public max = 100;
+  @Input() public step: number = 1;
+  @Input() public min: number = 1;
+  @Input() public max: number = 100;
 
-  public value = 1;
-  public focus: boolean;
+  public value$: BehaviorSubject<number> = new BehaviorSubject(1);
+  public focus$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   private onTouch: Function;
   private onModelCahge: Function;
 
-  public writeValue(value: number) {
-    this.value = value || 1;
-  }
+  public writeValue = (value: number) => this.value$.next(value || 1);
 
   public registerOnTouched(fn): void {
     this.onTouch = fn;
@@ -36,17 +37,19 @@ export class OrderCounterComponent implements ControlValueAccessor {
   }
 
   public increment(): void {
-    if (this.value < this.max) {
-      this.value += this.step;
-      this.onModelCahge(this.value);
+    const currentValue = this.value$.value;
+    if (currentValue < this.max) {
+      this.value$.next(currentValue + this.step);
+      this.onModelCahge(currentValue);
     }
     this.onTouch();
   }
 
   public decrement(): void {
-    if (this.value > this.min) {
-      this.value -= this.step;
-      this.onModelCahge(this.value);
+    const currentValue = this.value$.value;
+    if (currentValue > this.min) {
+      this.value$.next(currentValue - this.step);
+      this.onModelCahge(currentValue);
     }
     this.onTouch();
   }
@@ -66,14 +69,14 @@ export class OrderCounterComponent implements ControlValueAccessor {
   }
 
   public onBlur(event: FocusEvent): void {
-    this.focus = false;
+    this.focus$.next(false);
     event.preventDefault();
     event.stopPropagation();
     this.onTouch();
   }
 
   public onFocus(event: FocusEvent): void {
-    this.focus = true;
+    this.focus$.next(true);
     event.preventDefault();
     event.stopPropagation();
     this.onTouch();

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 
 import { Cakes } from '../../models';
@@ -9,14 +9,9 @@ import { Cakes } from '../../models';
   styleUrls: ['./order-products.component.css'],
 })
 export class OrderProductsComponent {
-  @Input()
-  public parent: FormGroup;
-
-  @Input()
-  public cakes: Cakes[];
-
-  @Output()
-  public removed = new EventEmitter<any>();
+  @Input() public parent: FormGroup;
+  @Input() public cakes: Cakes[];
+  @Output() public removed = new EventEmitter<any>();
 
   public quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   public sizes: string[] = ['small', 'medium', 'large'];

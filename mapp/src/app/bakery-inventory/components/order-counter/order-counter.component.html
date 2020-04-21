@@ -1,12 +1,13 @@
-<div class="or-counter" [class.focused]="focus">
+<div class="or-counter" [class.focused]="focus$ | async">
   <div
     tabindex="0"
     class="in_div"
     (keydown)="onKeyDown($event)"
     (blur)="onBlur($event)"
-    (focus)="onFocus($event)"
-  >
-    <p>{{ value }}</p>
+    (focus)="onFocus($event)">
+
+    <p>{{ value$ | async }}</p>
+
     <div>
       <button type="button" (click)="increment()" [disabled]="value === max">
         <i class="fas fa-plus"></i>

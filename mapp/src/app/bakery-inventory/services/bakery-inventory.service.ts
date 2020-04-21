@@ -1,3 +1,5 @@
+import { of, Observable } from 'rxjs';
+
 import { Cakes, Stock } from '../models';
 
 export class BakeryInventoryService {
@@ -50,11 +52,7 @@ export class BakeryInventoryService {
         }
     ];
 
-    public getCartItems(): Stock[] {
-        return this.order.slice();
-    }
+    public getCartItems = (): Observable<Stock[]> => of(this.order.slice());
 
-    public getCakes(): Cakes[] {
-        return this.cakes.slice();
-    }
+    public getCakes = (): Observable<Cakes[]> => of(this.cakes.slice());
 }

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 import { Cakes } from '../../models';
 import { BakeryInventoryService } from '../../services';
@@ -9,9 +11,10 @@ import { OrderValidator } from '../../validators';
     selector: 'bakery-inventory',
     templateUrl: './bakery-inventory.html',
     styleUrls: ['./bakery-inventory.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BakeryInventoryComponent implements OnInit {
-    public cakes: Cakes[] = [];
+    public cakes$: Observable<Cakes[]>;
     public form = this.fb.group({
         info: this.fb.group({
             name: ['', Validators.required],
@@ -28,11 +31,13 @@ export class BakeryInventoryComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private _bakeryService: BakeryInventoryService,
+        private bakeryService: BakeryInventoryService,
     ) {}
 
     public ngOnInit() {
-        this.cakes = this._bakeryService.getCakes();
+        this.cakes$ = this.bakeryService.getCakes().pipe(
+            shareReplay(),
+        );
     }
 
     public added(stock: any): void {
